@@ -47,6 +47,7 @@ def synthesize(
     min_d=None,
     max_d=None,
     return_surfaces=False,
+    start_dd_std=0.02,
 ):
     """Return a pandas DataFrame which contains craters and their properties
     synthesized from the input parameters.
@@ -86,7 +87,7 @@ def synthesize(
     # Generate depth to diameter ratio
     if by_bin:
         df = diffuse_d_over_D_by_bin(
-            df, start_dd_mean="Stopar step", return_surfaces=return_surfaces
+            df, start_dd_mean="Stopar step", start_dd_std=start_dd_std, return_surfaces=return_surfaces
         )
     else:
         if return_surfaces:
@@ -94,7 +95,7 @@ def synthesize(
             df["surface"].astype(object)
             df["d/D", "surface"] = df.apply(
                 lambda crater: diffuse_d_over_D(
-                    crater["diameter"], crater["age"], return_surface=True
+                    crater["diameter"], crater["age"], return_surface=True,
                 ),
                 axis=1,
                 result_type="expand",
