@@ -93,7 +93,7 @@ def synthesize(
         if return_surfaces:
             df["surface"] = None
             df["surface"].astype(object)
-            df["d/D", "surface"] = df.apply(
+            df[["d/D", "surface"]] = df.apply(
                 lambda crater: diffuse_d_over_D(
                     crater["diameter"], crater["age"], return_surface=True,
                 ),
