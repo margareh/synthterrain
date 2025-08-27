@@ -30,6 +30,7 @@ from matplotlib.collections import PatchCollection
 from matplotlib.patches import Circle
 from matplotlib.ticker import ScalarFormatter
 from shapely.geometry import Point, Polygon
+from tqdm import tqdm
 
 from synthterrain.crater import functions
 from synthterrain.crater.age import equilibrium_age
@@ -93,7 +94,8 @@ def synthesize(
         if return_surfaces:
             df["surface"] = None
             df["surface"].astype(object)
-            df[["d/D", "surface"]] = df.apply(
+            tqdm.pandas(desc="Crater Diffusion")
+            df[["d/D", "surface"]] = df.progress_apply(
                 lambda crater: diffuse_d_over_D(
                     crater["diameter"], crater["age"], return_surface=True,
                 ),
@@ -101,7 +103,8 @@ def synthesize(
                 result_type="expand",
             )
         else:
-            df["d/D"] = df.apply(
+            tqdm.pandas(desc="Crater Diffusion")
+            df["d/D"] = df.progress_apply(
                 lambda crater: diffuse_d_over_D(crater["diameter"], crater["age"]),
                 axis=1,
             )
