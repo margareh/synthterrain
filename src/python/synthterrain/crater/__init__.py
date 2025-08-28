@@ -20,6 +20,7 @@
 import logging
 import math
 import random
+import time
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -87,9 +88,12 @@ def synthesize(
 
     # Generate depth to diameter ratio
     if by_bin:
+        start = time.time()
         df = diffuse_d_over_D_by_bin(
             df, start_dd_mean="Stopar step", start_dd_std=start_dd_std, return_surfaces=return_surfaces
         )
+        end = time.time()
+        print("Elapsed time from binned crater diffusion: %4.2f" % (end-start))
     else:
         if return_surfaces:
             df["surface"] = None
