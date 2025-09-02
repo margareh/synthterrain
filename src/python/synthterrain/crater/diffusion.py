@@ -28,6 +28,7 @@ import logging
 import math
 import statistics
 from typing import Union
+from tqdm import tqdm
 
 import numpy as np
 import numpy.typing as npt
@@ -516,7 +517,7 @@ def make_crater_field(
 
     tm_window = get_data_window(terrain_model)
 
-    for row in df.itertuples(index=False):
+    for row in tqdm(df.itertuples(index=False)):
         surf = row.surface
         if surf is None:
             logger.info(f"There is no surface for this row: {row}")
