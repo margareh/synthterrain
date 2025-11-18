@@ -88,21 +88,22 @@ def kappa_diffusivity(diameter: float) -> float:
     # power law exponent for correcting this to small sizes.
     # Fassett and Thomson (2015) indicates *kappa0* is 5.5e-6 m^2 / year
     # (the default).
-    # kappa0=5.5e-6, kappa_corr=0.9
-    # return kappa0 * math.pow(diameter / 1000, kappa_corr)
+    kappa0 = 5.5e-6
+    kappa_corr = 0.9
+    return kappa0 * math.pow(diameter / 1000, kappa_corr)
 
-    # The logic below replaced the above simple logic on
-    # 2022-05-22 by Caleb.
-    if diameter <= 11.2:
-        k = 0.0155  # m2/myr
-    elif diameter < 45:
-        k = 1.55e-3 * math.pow(diameter, 0.974)
-    elif diameter < 125:
-        k = 1.23e-3 * math.pow(diameter, 0.8386)
-    else:  # UNCONSTRAINED BY EQUILIBRIUM ABOVE 125m!!!!!!!
-        k = 5.2e-3 * math.pow(diameter, 1.3)
+    # # The logic below replaced the above simple logic on
+    # # 2022-05-22 by Caleb.
+    # if diameter <= 11.2:
+    #     k = 0.0155  # m2/myr
+    # elif diameter < 45:
+    #     k = 1.55e-3 * math.pow(diameter, 0.974)
+    # elif diameter < 125:
+    #     k = 1.23e-3 * math.pow(diameter, 0.8386)
+    # else:  # UNCONSTRAINED BY EQUILIBRIUM ABOVE 125m!!!!!!!
+    #     k = 5.2e-3 * math.pow(diameter, 1.3)
 
-    return k / 1.0e6  # m2/yr
+    # return k / 1.0e6  # m2/yr
 
 
 def diffuse_d_over_D(
