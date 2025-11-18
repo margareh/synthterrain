@@ -31,7 +31,7 @@ from synthterrain.crater.profile import stopar_fresh_dd
 logger = logging.getLogger(__name__)
 
 
-def equilibrium_age(diameters, pd_csfd, eq_csfd):
+def equilibrium_age(diameters, pd_csfd, eq_csfd, eps=0.01):
     """
     Returns a numpy array which contains the equilibrium ages
     which correspond to the craters provided via *diameters*
@@ -44,7 +44,7 @@ def equilibrium_age(diameters, pd_csfd, eq_csfd):
     cratering in craters per square meter per Gigayear at that
     diameter (pd_csfd).
     """
-    upper_diameters = np.float_power(10, np.log10(diameters) + 0.1)
+    upper_diameters = np.float_power(10, np.log10(diameters) + eps)
     eq = eq_csfd(diameters) - eq_csfd(upper_diameters)
     pf = pd_csfd(diameters) - pd_csfd(upper_diameters)
 
